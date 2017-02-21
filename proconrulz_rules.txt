@@ -1,0 +1,97 @@
+#################################################################
+#Various Kill Announcements
+
+#################################################################
+# Melee Kills Announcer
+On Kill;Weapon Weapons/Knife/Knife;Say %p% slit the throat of %v% !!!
+On Kill;Weapon Melee;Yell %p%  oxxxx{]::::::::::> Ass Kicked <::::::::::[}xxxxo  %v%  !!!
+On Kill;If %wk% contains Defib;Yell %p%  ["||"] Nuts ["||"]  %v% !!! 
+On Kill;If %wk% contains Repair;Yell %p%  [:::Burnt Ass:::]==~~   %v% !!!
+On Kill;Weapon Melee;Say %p%  oxxxx{]::::::::::> Ass Kicked <::::::::::[}xxxxo  %v%  !!!
+On Kill;If %wk% contains Defib;Say %p%  ["||"] Nuts ["||"]  %v% !!! 
+On Kill;If %wk% contains Repair;Say %p%  [:::Burnt Ass:::]==~~   %v% !!!
+
+
+##### FIRSTBLOOD #####
+On Kill;ServerFirst;Say %pt% %p% got First Ass kick on %v% with %w%
+On Kill;ServerFirst;Yell %pt% %p% got First Ass kick on %v% with %w%
+
+
+
+
+
+######################################################
+# Unreal Tournament Kill Streak Announcer by ty_ger07
+######################################################
+#### Announcements of killstreak ending:
+On Kill;If %server_streak[%v%]% >= 5;Say %v%''s Ass Kicking spree (%server_streak[%v%]% Kicks) was hooked by %p%! with %w%   
+On Kill;If %server_streak[%v%]% >= 5;Yell %v%''s Ass Kicking spree (%server_streak[%v%]% Kicks) was hooked by %p%! with %w%
+On TeamKill;If %server_streak[%v%]% >= 5;Say %p%'s TEAMKILL ENDED %v%'s %server_streak[%v%]%-KILL STREAK with %w%
+On Suicide;If %server_streak[%p%]% >= 5;Say %v%''s Ass Kicking spree (%server_streak[%v%]% Kicks) was hooked by SELF KICK
+On Suicide;If %server_streak[%p%]% >= 5;Yell %v%''s Ass Kicking spree (%server_streak[%v%]% Kicks) was hooked by SELF KICK
+#### Reset the player's streak count when they are killed:
+On Kill;Set %server_streak[%v%]% 0
+On TeamKill;Set %server_streak[%v%]% 0
+On Suicide;Set %server_streak[%v%]% 0
+#### Reset killincr to 0 if server_streak is 0
+On Kill;If %server_streak[%p%]% == 0;Set %killincr% 0
+#### Accumulate the kill count for each player in a var %server_streak[playername]%
+On Kill;Incr %killincr%;Incr %server_streak[%p%]%;
+#### Say periodic killstreak messages
+#On Kill;If %killincr% == 30;Set %killincr% 25;Say Beauty at the Beast! %p% %server_streak[%p%]% KILL STREAK
+#On Kill;If %server_streak[%p%]% == 25;Say Beauty at the Beast! %p% 25-KILL STREAK
+#On Kill;If %server_streak[%p%]% == 20;Say He's Unstoppable! %p% 20-KILL STREAK
+#On Kill;If %server_streak[%p%]% == 15;Say Getting Ridiculous! %p% 15-KILL STREAK
+#On Kill;If %server_streak[%p%]% == 10;Say He is on Fire! %p% 10-KILL STREAK
+#On Kill;If %server_streak[%p%]% == 5;Say Killing Spree! %p% 5-KILL STREAK
+
+
+# Most Deaths
+On Spawn;Not Playerfirst;Incr %playerdead%
+On Spawn;If %playerdead% > %server_dead%;Set %server_dead% %playerdead%;Set %server_deadplayer% %p%
+
+# Most kills
+On Kill;Incr %playerkills%
+On Kill;If %playerkills% > %server_mostkills%;Set %server_mostkills% %playerkills%;Set %server_mostkillsplayer% %p%
+
+# Firstblood
+On kill;ServerFirst;Set %server_firstblood% %p%;Set %server_firstbloodtarget% %v%
+
+# Lastblood
+On Kill;Set %server_lastbloodplayer% %p%;Set %server_lastbloodtarget% %v%;
+
+# Most knives
+On kill;Damage Melee;Incr %playerknives%
+On Kill;Damage Melee;If %playerknives% > %server_knives%;Set %server_knives% %playerknives%;Set %server_knivesplayer% %p%
+
+# END ROUND MESSAGE
+On RoundOver;
+Say - #################################
+Say - ##     END OF ROUND DETAILS    ##
+Say - #################################
+Say - First Blood: %server_firstblood% 
+Say - Most Kills: %server_mostkillsplayer% [%server_mostkills%]
+Say - Most Knives: %server_knivesplayer% [%server_knives%] 
+Say - Most Deaths: %server_deadplayer% [%server_dead%]
+Say - Last Blood: %server_lastbloodplayer%
+
+
+#################################################################
+#MULTI KILL ANNOUNCER --- OPTIMUSPRIMEIN
+On Spawn;Set %multi% 0
+On Kill;Not Rate 2 4;Set %multi% 0
+On Kill;Rate 10 36;if %multi% > 8;Incr %multi%
+On Kill;Rate 9 32;if %multi% == 8;Incr %multi%
+On Kill;Rate 8 28;if %multi% == 7;Incr %multi%
+On Kill;Rate 7 24;if %multi% == 6;Incr %multi%
+On Kill;Rate 6 20;if %multi% == 5;Incr %multi%
+On Kill;Rate 5 16;if %multi% == 4;Incr %multi%
+On Kill;Rate 4 12;if %multi% == 3;Incr %multi%
+On Kill;Rate 3 8;if %multi% == 2;Incr %multi%
+On Kill;Rate 2 4;if %multi% == 0;Set %multi% 2
+On Kill;if %multi% == 10;Say %p% got AUTO banned for hacks;Ban Hacking/Cheating - AutoTrigger - %p%
+On Kill;if %multi% > 5;Say %p%: -== ### M-O-N-S-T-E-R A-S-S K-I-C-K ### (%multi% in a row) ==-;
+On Kill;if %multi% == 5;Say %p%: -== ### ULTRA Ass Kick ### (%multi% in a row) ==-;
+On Kill;if %multi% == 4;Say %p%: -= ### Mega Ass Kick ### (%multi% in a row) =-;
+On Kill;if %multi% == 3;PlayerSay %p%: "### Multi Ass Kick ###"
+On Kill;if %multi% == 2;PlayerSay %p%: "### Double Ass Kick ###"
